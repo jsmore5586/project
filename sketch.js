@@ -1,38 +1,70 @@
+
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Body = Matter.Body;
+const Render = Matter.Render;
+var dustbinObj, paperObject,groundObject	
+var world;
 
-var engine, world;
-var stone, rubber,hammer;
+
+function setup() {
+	createCanvas(1600, 700);
+	rectMode(CENTER);
 
 
-function setup(){
-    var canvas = createCanvas(1200,600);
-    engine = Engine.create();
-    world = engine.world;
+	engine = Engine.create();
+	world = engine.world;
+	
+	paperObject=new paper(200,450,70);
+	groundObject=new ground(width/2,670,width,20);
+	dustbinObj=new dustbin(1200,650);
+	//Create a Ground
+	
 
-    plane = new Plane(600,height,1200,20)
-    iron = new Iron(300,350);
-    stone = new Stone(700,320,100,100);
+	var render = Render.create({
+	  element: document.body,
+	  engine: engine,
+	  options: {
+	    width: 1600,
+	    height: 700,
+	    wireframes: false
+	  }
+	});
+
+	Engine.run(engine);
+	Render.run(render);
   
-    rubber=new Rubber(900,450,70);
-    hammer = new Hammer(10,100);
-
-  
-
-
 }
 
-function draw(){
-    background("lightBlue");
-    Engine.update(engine);
 
-    stone.display();
-    plane.display();
-   
-    rubber.display();
-    iron.display()  
-    hammer.display();
+function draw() {
+  rectMode(CENTER);
+  background(230);
+ 
+  
+  paperObject.display();
+  groundObject.display();
+  dustbinObj.display();
 
+  
+  
+ 
+  
+  
  
 }
+
+function keyPressed() {
+  	if (keyCode === UP_ARROW) {
+
+    	Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:130,y:-145});
+
+    
+  	}
+}
+
+
+
+
+
